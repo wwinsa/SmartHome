@@ -51,9 +51,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = null;
+            Bundle bundle = new Bundle();
+
             switch (view.getId()){
                 case R.id.btn_temp:
                     intent = new Intent(MainActivity.this,TempActivity.class);
+                    bundle.putIntegerArrayList("temp",temp);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                     break;
                 case R.id.btn_humi:

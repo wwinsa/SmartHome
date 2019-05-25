@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TempActivity extends AppCompatActivity {
 
     private Button btn_n_plus,btn_n_minus,btn_s_plus,btn_s_minus,btn_light;
@@ -16,6 +19,8 @@ public class TempActivity extends AppCompatActivity {
 
     private int num = 25 ;
     private int speed = 3 ;
+    private ArrayList<Integer> temp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,16 @@ public class TempActivity extends AppCompatActivity {
         setListeners();
         tv_n.setText(Integer.toString(num));
         tv_s.setText(Integer.toString(speed));
+
+
+        temp = this.getIntent().getIntegerArrayListExtra("temp");
+        Toast.makeText(getApplication(), temp.get(0).toString(), Toast.LENGTH_SHORT).show();
+
+//        String strData = "";
+//        for (int i : temp) {
+//            strData = strData + "/t" + temp.get(i).toString();
+//        }
+//        Toast.makeText(getApplication(), strData, Toast.LENGTH_SHORT).show();
 
     }
 
