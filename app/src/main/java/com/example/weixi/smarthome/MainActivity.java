@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_temp,btn_humi,btn_smoke,btn_ch4;
     //data
-    private int temp = 25 ;
+   private ArrayList<Integer> temp =new ArrayList<Integer>();
     private int humi = 25 ;
     private int smoke = 25 ;
     private int meth = 25 ;
@@ -24,11 +27,17 @@ public class MainActivity extends AppCompatActivity {
         btn_humi = findViewById(R.id.btn_humi);
         btn_smoke = findViewById(R.id.btn_smoke);
         btn_ch4 = findViewById(R.id.btn_ch4);
+        inittemp(25);
+        inittemp(30);
+        inittemp(16);
         setListeners();
-        btn_temp.setText("温度："+temp+"度");
+        btn_temp.setText("温度："+temp.get(temp.size()-1)+"度");
         btn_humi.setText("湿度"+humi);
         btn_smoke.setText("烟雾浓度"+smoke);
         btn_ch4.setText("甲醛浓度"+meth);
+    }
+    private void inittemp(int num){
+        temp.add(num);
     }
     private void setListeners(){
         OnClick onClick = new OnClick();
