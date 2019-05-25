@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,10 +18,12 @@ public class TempActivity extends AppCompatActivity {
 
     private Button btn_n_plus,btn_n_minus,btn_s_plus,btn_s_minus,btn_light;
     private TextView tv_n,tv_s;
+    private ListView lv_showdata;
 
     private int num = 25 ;
     private int speed = 3 ;
-    private ArrayList<Integer> temp;
+    private ArrayList<Integer> temp = new ArrayList<Integer>();
+    private ArrayAdapter<Integer> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,19 @@ public class TempActivity extends AppCompatActivity {
 //        }
 //        Toast.makeText(getApplication(), strData, Toast.LENGTH_SHORT).show();
 
+        lv_showdata = findViewById(R.id.lv_showdata);
+//        tv_showdata.setAdapter();
+        adapter = new ArrayAdapter<Integer>(TempActivity.this,android.R.layout.simple_expandable_list_item_1,temp);
+        lv_showdata.setAdapter(adapter);
+        Toast.makeText(getApplication(), "test", Toast.LENGTH_SHORT).show();
     }
 
+    private void showIngraph(ArrayList<Integer> temp){
+        //要花钱，有时间再回来看
+    }
+    private void showInListView(ArrayList<Integer> temp){
+
+    }
     private void setListeners(){
         TempActivity.OnClick onClick = new TempActivity.OnClick();
         btn_n_minus.setOnClickListener(onClick);

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_temp,btn_humi,btn_smoke,btn_ch4;
+
     //data
    private ArrayList<Integer> temp =new ArrayList<Integer>();
     private int humi = 25 ;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         btn_humi = findViewById(R.id.btn_humi);
         btn_smoke = findViewById(R.id.btn_smoke);
         btn_ch4 = findViewById(R.id.btn_ch4);
+
         inittemp(25);
         inittemp(30);
         inittemp(16);
