@@ -62,6 +62,8 @@ public class TempActivity extends AppCompatActivity {
 
     private void showIngraph(ArrayList<Integer> temp){
         //要花钱，有时间再回来看
+        //https://www.cnblogs.com/huolongluo/p/5988644.html
+        //https://blog.csdn.net/u011084603/article/details/50365477
     }
     private void showInListView(ArrayList<Integer> temp){
 
@@ -82,32 +84,43 @@ public class TempActivity extends AppCompatActivity {
             switch (view.getId()){
                 case R.id.btn_light:
                     if(flag){
-                        btn_light.setBackgroundResource(R.drawable.btn_light_off);
+                        btn_light.setBackgroundResource(R.drawable.btn_light_on);
                         flag = false;
                     }
                     else {
-                        btn_light.setBackgroundResource(R.drawable.btn_light_on);
+                        btn_light.setBackgroundResource(R.drawable.btn_light_off);
                         flag = true;
                     }
 
                     break;
                 case R.id.btn_n_minus:
-                    num --;
-                    tv_n.setText(Integer.toString(num));
+                    if(flag && num > 15){
+                        num --;
+                        tv_n.setText(Integer.toString(num));
 //                    Toast.makeText(TempActivity.this,"123",Toast.LENGTH_SHORT).show();
+                    }
+
                     break;
                 case R.id.btn_n_plus:
-                    num ++;
-                    tv_n.setText(Integer.toString(num));
+                    if(flag && num < 37){
+                        num ++;
+                        tv_n.setText(Integer.toString(num));
+                    }
+
 
                     break;
                 case R.id.btn_smoke:
-                    speed --;
-                    tv_s.setText(Integer.toString(speed));
+                    if(flag){
+                        speed --;
+                        tv_s.setText(Integer.toString(speed));
+                    }
+
                     break;
                 case R.id.btn_ch4:
-                    speed --;
-                    tv_s.setText(Integer.toString(speed));
+                    if(flag){
+                        speed --;
+                        tv_s.setText(Integer.toString(speed));
+                    }
                     break;
             }
         }

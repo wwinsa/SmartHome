@@ -11,6 +11,11 @@
     android:background="@drawable/fall"
     >
 
+    <Button
+        android:id="@+id/btn_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bluetooth"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

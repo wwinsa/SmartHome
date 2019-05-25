@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btn_temp,btn_humi,btn_smoke,btn_ch4;
+    private Button btn_temp,btn_humi,btn_smoke,btn_ch4,btn_bt;
 
     //data
    private ArrayList<Integer> temp =new ArrayList<Integer>();
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btn_bt = findViewById(R.id.btn_bt);
         btn_temp = findViewById(R.id.btn_temp);
         btn_humi = findViewById(R.id.btn_humi);
         btn_smoke = findViewById(R.id.btn_smoke);
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         btn_humi.setOnClickListener(onClick);
         btn_smoke.setOnClickListener(onClick);
         btn_ch4.setOnClickListener(onClick);
+        btn_bt.setOnClickListener(onClick);
     }
     private class OnClick implements View.OnClickListener{
 
@@ -57,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
 
             switch (view.getId()){
+                case R.id.btn_bt:
+                    intent = new Intent(MainActivity.this,BlueToothActivity.class);
+                    startActivity(intent);
+                    break;
                 case R.id.btn_temp:
                     intent = new Intent(MainActivity.this,TempActivity.class);
                     bundle.putIntegerArrayList("temp",temp);
