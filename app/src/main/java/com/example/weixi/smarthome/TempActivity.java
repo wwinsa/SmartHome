@@ -37,15 +37,17 @@ public class TempActivity extends AppCompatActivity {
         btn_light = findViewById(R.id.btn_light);
         tv_n = findViewById(R.id.tv_n_num);
         tv_s = findViewById(R.id.tv_s_num);
+        lv_showdata = findViewById(R.id.lv_showdata);
 
-
-        setListeners();
         tv_n.setText(Integer.toString(num));
         tv_s.setText(Integer.toString(speed));
-
+        setListeners();
 
         temp = this.getIntent().getIntegerArrayListExtra("temp");
-        Toast.makeText(getApplication(), temp.get(0).toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplication(), temp.get(0).toString(), Toast.LENGTH_SHORT).show();
+        adapter = new ArrayAdapter<Integer>(TempActivity.this,android.R.layout.simple_expandable_list_item_1,temp);
+        lv_showdata.setAdapter(adapter);
+        Toast.makeText(getApplication(), "test", Toast.LENGTH_SHORT).show();
 
 //        String strData = "";
 //        for (int i : temp) {
@@ -53,11 +55,6 @@ public class TempActivity extends AppCompatActivity {
 //        }
 //        Toast.makeText(getApplication(), strData, Toast.LENGTH_SHORT).show();
 
-        lv_showdata = findViewById(R.id.lv_showdata);
-//        tv_showdata.setAdapter();
-        adapter = new ArrayAdapter<Integer>(TempActivity.this,android.R.layout.simple_expandable_list_item_1,temp);
-        lv_showdata.setAdapter(adapter);
-        Toast.makeText(getApplication(), "test", Toast.LENGTH_SHORT).show();
     }
 
     private void showIngraph(ArrayList<Integer> temp){
@@ -109,16 +106,16 @@ public class TempActivity extends AppCompatActivity {
 
 
                     break;
-                case R.id.btn_smoke:
-                    if(flag){
+                case R.id.btn_s_minus:
+                    if(flag && speed >1){
                         speed --;
                         tv_s.setText(Integer.toString(speed));
                     }
 
                     break;
-                case R.id.btn_ch4:
-                    if(flag){
-                        speed --;
+                case R.id.btn_s_plus:
+                    if(flag && speed < 6){
+                        speed ++;
                         tv_s.setText(Integer.toString(speed));
                     }
                     break;

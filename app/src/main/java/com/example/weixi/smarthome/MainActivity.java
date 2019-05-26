@@ -25,12 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_bt = findViewById(R.id.btn_bt);
-        btn_temp = findViewById(R.id.btn_temp);
-        btn_humi = findViewById(R.id.btn_humi);
-        btn_smoke = findViewById(R.id.btn_smoke);
-        btn_ch4 = findViewById(R.id.btn_ch4);
 
+        initUI();
         inittemp(25);
         inittemp(30);
         inittemp(16);
@@ -39,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
         btn_humi.setText("湿度"+humi);
         btn_smoke.setText("烟雾浓度"+smoke);
         btn_ch4.setText("甲醛浓度"+meth);
+    }
+    private void initUI(){
+        btn_bt = findViewById(R.id.btn_bt);
+        btn_temp = findViewById(R.id.btn_temp);
+        btn_humi = findViewById(R.id.btn_humi);
+        btn_smoke = findViewById(R.id.btn_smoke);
+        btn_ch4 = findViewById(R.id.btn_ch4);
+
+
     }
     private void inittemp(int num){
         temp.add(num);
