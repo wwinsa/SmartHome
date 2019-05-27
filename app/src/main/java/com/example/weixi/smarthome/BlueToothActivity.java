@@ -8,13 +8,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.opengl.ETC1;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +38,9 @@ public class BlueToothActivity extends AppCompatActivity {
     private IntentFilter intentFilter;
 //    private MyBtReceiver btReceiver;
 
-    private TextView tv_test, tv_test2;
+    private TextView tv_test, tv_test2, tv_test3;
+    private EditText et;
+
     // 选中发送数据的蓝牙设备，全局变量，否则连接在方法执行完就结束了
     private BluetoothDevice selectDevice;
     // 获取到选中设备的客户端串口，全局变量，否则连接在方法执行完就结束了
@@ -42,10 +48,14 @@ public class BlueToothActivity extends AppCompatActivity {
     // 获取到向设备写的输出流，全局变量，否则连接在方法执行完就结束了
     private OutputStream os;
     // 服务端利用线程不断接受客户端信息
-    private AcceptThread thread;
+//    private AcceptThread thread;
+
+    private InputStream is;// 获取到输入流
 
     private final UUID MY_UUID = UUID
             .fromString("00001101-0000-1000-8000-00805F9B34FB");
+//    //输入信息
+//    private int text = 1110 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,30 @@ public class BlueToothActivity extends AppCompatActivity {
 
         tv_test = findViewById(R.id.tv_test);
         tv_test2 = findViewById(R.id.tv_test2);
+        tv_test3 = findViewById(R.id.tv_test3);
+        et = findViewById(R.id.et);
+
+//        String stringport = et.getText().toString().trim();
+//        text = Integer.parseInt(stringport);//把port转换成int整形
+
+//        et.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                //String获取信息
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
         // 蓝牙未打开，询问打开
         if (!bluetoothAdapter.isEnabled()) {
@@ -88,7 +122,40 @@ public class BlueToothActivity extends AppCompatActivity {
 
 
 
-
+//        Handler uiHandler =new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//
+//                switch (msg.what) {
+//                    case Params.MSG_REV_A_CLIENT:
+//                        Log.e(TAG, "--------- uihandler set device name, go to data frag");
+//                        BluetoothDevice clientDevice = (BluetoothDevice) msg.obj;
+//                        dataTransFragment.receiveClient(clientDevice);
+//                        viewPager.setCurrentItem(1);
+//                        break;
+//                    case Params.MSG_CONNECT_TO_SERVER:
+//                        Log.e(TAG, "--------- uihandler set device name, go to data frag");
+//                        BluetoothDevice serverDevice = (BluetoothDevice) msg.obj;
+//                        dataTransFragment.connectServer(serverDevice);
+//                        viewPager.setCurrentItem(1);
+//                        break;
+//                    case Params.MSG_SERVER_REV_NEW:
+//                        String newMsgFromClient = msg.obj.toString();
+//                        dataTransFragment.updateDataView(newMsgFromClient, Params.REMOTE);
+//                        break;
+//                    case Params.MSG_CLIENT_REV_NEW:
+//                        String newMsgFromServer = msg.obj.toString();
+//                        dataTransFragment.updateDataView(newMsgFromServer, Params.REMOTE);
+//                        break;
+//                    case Params.MSG_WRITE_DATA:
+//                        String dataSend = msg.obj.toString();
+//                        dataTransFragment.updateDataView(dataSend, Params.ME);
+//                        deviceListFragment.writeData(dataSend);
+//                        break;
+//
+//                }
+//            }
+//        };
         tv_test2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +170,10 @@ public class BlueToothActivity extends AppCompatActivity {
                 }
                 // 如果选择设备为空则代表还没有选择设备
                 //通过MAC获得蓝牙设备
-//        bluetoothAdapter.getRemoteDevice("98:D3:32:70:8B:76");
+                selectDevice = bluetoothAdapter.getRemoteDevice("98:D3:32:70:8B:76");
+                if(selectDevice != null){
+                    tv_test3.setText("已连接");
+                }
 //                if (selectDevice == null) {
 //                    //通过地址获取到该设备
 //                    selectDevice = bluetoothAdapter.getRemoteDevice(address);
@@ -119,17 +189,20 @@ public class BlueToothActivity extends AppCompatActivity {
                         clientSocket.connect();
                         // 获取到输出流，向外写数据
                         os = clientSocket.getOutputStream();
-
+                        is = clientSocket.getInputStream();
+                        toast("socket是空");
                     }
                     // 判断是否拿到输出流
                     if (os != null) {
                         // 需要发送的信息
-                        String text = "我传过去了";
+                        int text = 1110 ;
                         // 以utf-8的格式发送出去
-//                        os.write(LED_STATE.getBytes("UTF-8"));
+                        os.write(text);
+//                        tv_test2.setText(text);
+                        toast("发送信息成功，请查收");
                     }
                     // 吐司一下，告诉用户发送成功
-                    toast("发送信息成功，请查收");
+                    toast("我不知道发送信息成功没有");
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -140,10 +213,33 @@ public class BlueToothActivity extends AppCompatActivity {
             }
         });
 
-        // 实例接收客户端传过来的数据线程
-        thread = new AcceptThread();
-        // 线程开始
-        thread.start();
+//        // 实例接收客户端传过来的数据线程
+//        thread = new AcceptThread();
+//        // 线程开始
+//        thread.start();
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                byte[] buffer = new byte[1024];
+//                int len;
+//                String content;
+//                try {
+//                    //读数据
+//                    while ((len=is.read(buffer)) != -1) {
+//                        content=new String(buffer, 0, len);
+//                        Message message = new Message();
+//                        message.what = Params.MSG_CLIENT_REV_NEW;
+//                        message.obj = content;
+//                        //更新 ui
+//                        handler.sendMessage(message);
+//                    }
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
 
     }
 
@@ -179,7 +275,7 @@ public class BlueToothActivity extends AppCompatActivity {
             tv_test.setText(tmp.toString());
         }
 
-    };
+    }
 
     //广播接收器
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -211,58 +307,59 @@ public class BlueToothActivity extends AppCompatActivity {
             super.handleMessage(msg);
             // 通过msg传递过来的信息，吐司一下收到的信息
              Toast.makeText(BlueToothActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+             tv_test3.setText(msg.obj.toString());
 //            re_msg.setText((String)msg.obj);
         }
     };
 
 
 
-    // 服务端接收信息线程
-    private class AcceptThread extends Thread {
-        private BluetoothServerSocket serverSocket;// 服务端接口
-        private BluetoothSocket socket;// 获取到客户端的接口
-        private InputStream is;// 获取到输入流
-        private OutputStream os;// 获取到输出流
-
-        public AcceptThread() {
-            try {
-                // 通过UUID监听请求，然后获取到对应的服务端接口
-                serverSocket = bluetoothAdapter
-                        .listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void run() {
-            try {
-                // 接收其客户端的接口
-                socket = serverSocket.accept();
-                // 获取到输入流
-                is = socket.getInputStream();
-                // 获取到输出流
-                os = socket.getOutputStream();
-
-                // 无线循环来接收数据
-                while (true) {
-                    // 创建一个128字节的缓冲
-                    byte[] buffer = new byte[128];
-                    // 每次读取128字节，并保存其读取的角标
-                    int count = is.read(buffer);
-                    // 创建Message类，向handler发送数据
-                    Message msg = new Message();
-                    // 发送一个String的数据，让他向上转型为obj类型
-                    msg.obj = new String(buffer, 0, count, "utf-8");
-                    // 发送数据
-                    handler.sendMessage(msg);
-                }
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
-            }
-
-        }
-    }
+//    // 服务端接收信息线程
+//    private class AcceptThread extends Thread {
+//        private BluetoothServerSocket serverSocket;// 服务端接口
+//        private BluetoothSocket socket;// 获取到客户端的接口
+//        private InputStream is;// 获取到输入流
+//        private OutputStream os;// 获取到输出流
+//
+//        public AcceptThread() {
+//            try {
+//                // 通过UUID监听请求，然后获取到对应的服务端接口
+//                serverSocket = bluetoothAdapter
+//                        .listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        public void run() {
+//            try {
+//                // 接收其客户端的接口
+//                socket = serverSocket.accept();
+//                // 获取到输入流
+//                is = socket.getInputStream();
+//                // 获取到输出流
+//                os = socket.getOutputStream();
+//
+//                // 无线循环来接收数据
+//                while (true) {
+//                    // 创建一个128字节的缓冲
+//                    byte[] buffer = new byte[128];
+//                    // 每次读取128字节，并保存其读取的角标
+//                    int count = is.read(buffer);
+//                    // 创建Message类，向handler发送数据
+//                    Message msg = new Message();
+//                    // 发送一个String的数据，让他向上转型为obj类型
+//                    msg.obj = new String(buffer, 0, count, "utf-8");
+//                    // 发送数据
+//                    handler.sendMessage(msg);
+//                }
+//            } catch (Exception e) {
+//                // TODO: handle exception
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
 
 
     /**
