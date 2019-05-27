@@ -30,13 +30,7 @@
         android:paddingTop="50dp"
         android:paddingBottom="50dp"/>
 
-    <EditText
-        android:id="@+id/et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:hint="enter"
-        android:inputType="number"/>
+
 
     <TextView
         android:id="@+id/tv_test3"
@@ -46,7 +40,11 @@
         android:textColor="#002299"
         android:paddingTop="50dp"
         android:paddingBottom="50dp"/>
-
+    <ListView
+        android:id="@+id/lv_showdata"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        />
 
 
 

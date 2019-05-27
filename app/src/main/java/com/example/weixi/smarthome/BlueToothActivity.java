@@ -18,7 +18,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,7 +40,9 @@ public class BlueToothActivity extends AppCompatActivity {
     private BluetoothAdapter bluetoothAdapter;
 
     private TextView tv_test, tv_test2, tv_test3;
-    private EditText et;
+    private ArrayList<Integer> data = new ArrayList<Integer>();
+    private ArrayAdapter<Integer> adapter;
+    private ListView lv_showdata;
 
     // 选中发送数据的蓝牙设备，全局变量，否则连接在方法执行完就结束了
     private BluetoothDevice selectDevice;
@@ -65,8 +70,7 @@ public class BlueToothActivity extends AppCompatActivity {
         tv_test = findViewById(R.id.tv_test);
         tv_test2 = findViewById(R.id.tv_test2);
         tv_test3 = findViewById(R.id.tv_test3);
-        et = findViewById(R.id.et);
-
+        lv_showdata = findViewById(R.id.lv_showdata);
 
         // 蓝牙未打开，询问打开
         if (!bluetoothAdapter.isEnabled()) {
@@ -120,11 +124,6 @@ public class BlueToothActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        // 实例接收客户端传过来的数据线程
-//        thread = new AcceptThread();
-//        // 线程开始
-//        thread.start();
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -174,7 +173,10 @@ public class BlueToothActivity extends AppCompatActivity {
             super.handleMessage(msg);
             // 通过msg传递过来的信息，吐司一下收到的信息
              Toast.makeText(BlueToothActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
-             tv_test3.setText(msg.obj.toString());
+             String tmp = ((String) msg.obj).toString();
+             data.add(Integer.parseInt(tmp));
+             adapter = new ArrayAdapter<Integer>(BlueToothActivity.this,android.R.layout.simple_expandable_list_item_1,data);
+             lv_showdata.setAdapter(adapter);
         }
     };
 
