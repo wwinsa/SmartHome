@@ -10,11 +10,12 @@
     android:paddingRight="20dp"
     >
 
-    <ListView
-        android:id="@+id/lv_showdata"
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart_temp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        />
+        android:layout_height="250dp" >
+    </lecho.lib.hellocharts.view.LineChartView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

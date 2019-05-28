@@ -5,63 +5,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="30dp"
+    android:paddingTop="30dp"
     android:paddingRight="30dp"
-    android:paddingTop="50dp"
-    android:background="@drawable/fall"
+    android:paddingLeft="30dp"
+    android:background="@color/colorblack"
+
     >
+    <!--android:background="@drawable/fall"-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_bt"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="testbluetooth"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="实时数据"
+            android:textSize="48dp"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            />
 
-    <Button
-        android:id="@+id/btn_bt"
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="bluetooth"/>
-    <TextView
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_temp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:textSize="36dp"
+            android:text="温度："
+            android:background="@drawable/btn_temp"
+            android:layout_marginTop="50dp"
+            />
+        <Button
+            android:id="@+id/btn_humi"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:textSize="24dp"
+            android:text="湿度："
+            android:background="@drawable/btn_humi"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="实时数据"
-        android:textSize="48dp"
-        android:layout_gravity="center"
-        />
-    <Button
-        android:id="@+id/btn_temp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="36dp"
-        android:text="温度："
-        android:background="@drawable/btn_round"
-        android:layout_marginTop="50dp"
-        />
-    <Button
-        android:id="@+id/btn_humi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="36dp"
-        android:text="湿度："
-        android:textColor="#FF9900"
-        android:background="@drawable/btn_border"
-        android:layout_marginTop="50dp"
-        />
-    <Button
-        android:id="@+id/btn_smoke"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="36dp"
-        android:text="烟雾："
-        android:background="#03ff44"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_smoke"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:textSize="24dp"
+            android:text="烟雾："
+            android:background="@drawable/btn_smoke"
+            />
+        <Button
+            android:id="@+id/btn_ch4"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:textSize="28dp"
+            android:text="甲醛："
+            android:background="@drawable/btn_ch4"
+            android:layout_marginTop="50dp"
 
-        />
-    <Button
-        android:id="@+id/btn_ch4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="36dp"
-        android:text="甲醛："
-        android:background="#03ff44"
-        android:layout_marginTop="50dp"
+            />
 
-        />
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

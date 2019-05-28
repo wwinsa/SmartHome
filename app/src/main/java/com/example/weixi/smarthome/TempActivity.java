@@ -14,16 +14,28 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.view.LineChartView;
+
 public class TempActivity extends AppCompatActivity {
 
     private Button btn_n_plus,btn_n_minus,btn_s_plus,btn_s_minus,btn_light;
     private TextView tv_n,tv_s;
-    private ListView lv_showdata;
 
     private int num = 25 ;
     private int speed = 3 ;
     private ArrayList<Integer> temp = new ArrayList<Integer>();
-    private ArrayAdapter<Integer> adapter;
+
+    //chart
+    private LineChartView mChartView;
+    private LineChartData data;          // 折线图封装的数据类
+    private ArrayList<PointValue> values;
+    private ArrayList<Line> lines;
+    private Line line;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,26 +49,44 @@ public class TempActivity extends AppCompatActivity {
         btn_light = findViewById(R.id.btn_light);
         tv_n = findViewById(R.id.tv_n_num);
         tv_s = findViewById(R.id.tv_s_num);
-        lv_showdata = findViewById(R.id.lv_showdata);
+        mChartView = findViewById(R.id.chart_temp);
 
         tv_n.setText(Integer.toString(num));
         tv_s.setText(Integer.toString(speed));
         setListeners();
 
         temp = this.getIntent().getIntegerArrayListExtra("temp");
-//        Toast.makeText(getApplication(), temp.get(0).toString(), Toast.LENGTH_SHORT).show();
-        adapter = new ArrayAdapter<Integer>(TempActivity.this,android.R.layout.simple_expandable_list_item_1,temp);
-        lv_showdata.setAdapter(adapter);
-        Toast.makeText(getApplication(), "test", Toast.LENGTH_SHORT).show();
 
-//        String strData = "";
-//        for (int i : temp) {
-//            strData = strData + "/t" + temp.get(i).toString();
-//        }
-//        Toast.makeText(getApplication(), strData, Toast.LENGTH_SHORT).show();
+        values = new ArrayList<PointValue>();//折线上的点
+
+        for (int i = 0; i < temp.size(); i++){
+            values.add(new PointValue(i, temp.get(i)));
+        }
+
+        drawchart();
+
 
     }
 
+    private void drawchart(){
+        //line
+        line = new Line(values).setColor(Color.BLUE);//声明线并设置颜色
+        line.setCubic(false);//设置是平滑的还是直的
+        lines = new ArrayList<Line>();
+        lines.add(line);
+
+        data = new LineChartData();
+        //axis
+        Axis axisX = new Axis();//x轴
+        Axis axisY = new Axis();//y轴
+        axisX.setName("时间");
+        axisY.setName("温度");
+        data.setAxisXBottom(axisX);
+        data.setAxisYLeft(axisY);
+
+        data.setLines(lines);
+        mChartView.setLineChartData(data);//给图表设置数据
+    }
     private void showIngraph(ArrayList<Integer> temp){
         //要花钱，有时间再回来看
         //https://www.cnblogs.com/huolongluo/p/5988644.html

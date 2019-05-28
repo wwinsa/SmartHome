@@ -33,11 +33,14 @@ import java.util.Set;
 import java.util.UUID;
 
 
-import static com.example.weixi.smarthome.Params.NAME;
 
 public class BlueToothActivity extends AppCompatActivity {
 
     private BluetoothAdapter bluetoothAdapter;
+    public static final int REQUEST_ENABLE_BT = 11;
+    public static final String NAME = "QiaoJimBluetooth";
+    public static final int MSG_REV_A_CLIENT = 33;
+    public static final int MSG_CLIENT_REV_NEW = 347;
 
     private TextView tv_test, tv_test2, tv_test3;
     private ArrayList<Integer> data = new ArrayList<Integer>();
@@ -57,8 +60,8 @@ public class BlueToothActivity extends AppCompatActivity {
 
     private final UUID MY_UUID = UUID
             .fromString("00001101-0000-1000-8000-00805F9B34FB");
-//    //输入信息
-//    private int text = 1110 ;
+
+    private String tmp2 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class BlueToothActivity extends AppCompatActivity {
         // 蓝牙未打开，询问打开
         if (!bluetoothAdapter.isEnabled()) {
             Intent turnOnBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(turnOnBtIntent, Params.REQUEST_ENABLE_BT);
+            startActivityForResult(turnOnBtIntent, REQUEST_ENABLE_BT);
         }
 
         selectDevice = bluetoothAdapter.getRemoteDevice("98:D3:32:70:8B:76");
@@ -172,11 +175,18 @@ public class BlueToothActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             super.handleMessage(msg);
             // 通过msg传递过来的信息，吐司一下收到的信息
-             Toast.makeText(BlueToothActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+//             Toast.makeText(BlueToothActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+            //不能显示1位数据
              String tmp = ((String) msg.obj).toString();
-             data.add(Integer.parseInt(tmp));
-             adapter = new ArrayAdapter<Integer>(BlueToothActivity.this,android.R.layout.simple_expandable_list_item_1,data);
-             lv_showdata.setAdapter(adapter);
+             if(tmp.length() == 1){
+                 tmp2 = tmp;
+             }else{
+                 tmp = tmp2 + tmp;
+                 data.add(Integer.parseInt(tmp));
+                 adapter = new ArrayAdapter<Integer>(BlueToothActivity.this,android.R.layout.simple_expandable_list_item_1,data);
+                 lv_showdata.setAdapter(adapter);
+             }
+
         }
     };
 

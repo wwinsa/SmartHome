@@ -3,11 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="烟雾界面"/>
+        android:text="甲烷浓度"
+        android:layout_gravity="center"/>
+
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart_ch4"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" >
+    </lecho.lib.hellocharts.view.LineChartView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp">
+
+        <Button
+            android:id="@+id/btn_open"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:text="开窗"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            />
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:text="关窗"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
