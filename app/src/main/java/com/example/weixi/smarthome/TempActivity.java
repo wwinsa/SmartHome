@@ -57,6 +57,8 @@ public class TempActivity extends AppCompatActivity {
 
         temp = this.getIntent().getIntegerArrayListExtra("temp");
 
+        Toast.makeText(this,temp.get(temp.size()-1).toString(),Toast.LENGTH_SHORT).show();
+
         values = new ArrayList<PointValue>();//折线上的点
 
         for (int i = 0; i < temp.size(); i++){

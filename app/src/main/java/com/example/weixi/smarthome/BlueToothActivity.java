@@ -174,8 +174,8 @@ public class BlueToothActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             // TODO Auto-generated method stub
             super.handleMessage(msg);
-            // 通过msg传递过来的信息，吐司一下收到的信息
-//             Toast.makeText(BlueToothActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+            //通过msg传递过来的信息，吐司一下收到的信息
+             Toast.makeText(BlueToothActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
             //不能显示1位数据
              String tmp = ((String) msg.obj).toString();
              if(tmp.length() == 1){
