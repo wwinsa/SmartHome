@@ -32,9 +32,10 @@ public class TempActivity extends AppCompatActivity {
     //chart
     private LineChartView mChartView;
     private LineChartData data;          // 折线图封装的数据类
-    private ArrayList<PointValue> values;
+
+    private ArrayList<PointValue> values, std;
     private ArrayList<Line> lines;
-    private Line line;
+    private Line line, line2;
 
 
     @Override
@@ -56,13 +57,14 @@ public class TempActivity extends AppCompatActivity {
         setListeners();
 
         temp = this.getIntent().getIntegerArrayListExtra("temp");
-
         Toast.makeText(this,temp.get(temp.size()-1).toString(),Toast.LENGTH_SHORT).show();
 
         values = new ArrayList<PointValue>();//折线上的点
+        std = new ArrayList<PointValue>();
 
         for (int i = 0; i < temp.size(); i++){
             values.add(new PointValue(i, temp.get(i)));
+            std.add(new PointValue(i,28));
         }
 
         drawchart();
@@ -71,10 +73,14 @@ public class TempActivity extends AppCompatActivity {
     }
 
     private void drawchart(){
+
         //line
         line = new Line(values).setColor(Color.BLUE);//声明线并设置颜色
+        line2 = new Line(std).setColor(Color.parseColor("#336633"));
         line.setCubic(false);//设置是平滑的还是直的
+        line2.setHasPoints(false);
         lines = new ArrayList<Line>();
+        lines.add(line2);
         lines.add(line);
 
         data = new LineChartData();

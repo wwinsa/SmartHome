@@ -26,9 +26,9 @@ public class Smoke2Activity extends AppCompatActivity {
     //chart
     private LineChartView mChartView;
     private LineChartData data;          // 折线图封装的数据类
-    private ArrayList<PointValue> values;
+    private ArrayList<PointValue> values, std;
     private ArrayList<Line> lines;
-    private Line line;
+    private Line line , line2;
 
     private boolean hasAxes = true;       //是否有轴，x和y轴
     private boolean hasAxesNames = true;   //是否有轴的名字
@@ -49,33 +49,30 @@ public class Smoke2Activity extends AppCompatActivity {
         btn_open = findViewById(R.id.btn_open);
         setListeners();
 
-
-        initdata();
+        smoke = this.getIntent().getIntegerArrayListExtra("smoke");
+        Toast.makeText(this,smoke.get(smoke.size()-1).toString(),Toast.LENGTH_SHORT).show();
 
         values = new ArrayList<PointValue>();//折线上的点
+        std = new ArrayList<PointValue>();
 
         for (int i = 0; i < smoke.size(); i++){
             values.add(new PointValue(i, smoke.get(i)));
+            std.add(new PointValue(i, 20));
         }
 
         drawchart();
 
 
     }
-    private void initdata(){
-        smoke.add(30);
-        smoke.add(16);
-        smoke.add(25);
-        smoke.add(23);
-        smoke.add(23);
-        smoke.add(18);
-    }
 
     private void drawchart(){
         //line
         line = new Line(values).setColor(Color.BLUE);//声明线并设置颜色
+        line2 = new Line(values).setColor(Color.parseColor("#336633"));//声明线并设置颜色
         line.setCubic(false);//设置是平滑的还是直的
+        line2.setHasPoints(false);
         lines = new ArrayList<Line>();
+        lines.add(line2);
         lines.add(line);
 
         data = new LineChartData();
@@ -102,12 +99,12 @@ public class Smoke2Activity extends AppCompatActivity {
 
             switch (view.getId()) {
                 case R.id.btn_open:
-                    btn_open.setBackgroundResource(R.color.colorPrimary);
-                    btn_close.setBackgroundResource(R.color.colorPrimaryDark);
+                    btn_open.setBackgroundResource(R.color.lightblue1);
+                    btn_close.setBackgroundResource(R.color.darkblue1);
                     break;
                 case R.id.btn_close:
-                    btn_close.setBackgroundResource(R.color.colorPrimary);
-                    btn_open.setBackgroundResource(R.color.colorPrimaryDark);
+                    btn_close.setBackgroundResource(R.color.lightblue1);
+                    btn_open.setBackgroundResource(R.color.darkblue1);
                     break;
             }
         }

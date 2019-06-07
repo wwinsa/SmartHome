@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,8 @@ public class HumiActivity extends AppCompatActivity {
         mChartView = findViewById(R.id.chart_humi);
         setListeners();
 
-        humi = this.getIntent().getIntegerArrayListExtra("temp");
+        humi = this.getIntent().getIntegerArrayListExtra("humi");
+        Toast.makeText(this,humi.get(humi.size()-1).toString(),Toast.LENGTH_SHORT).show();
 
         values = new ArrayList<PointValue>();//折线上的点
 

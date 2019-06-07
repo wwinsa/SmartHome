@@ -25,7 +25,9 @@
         <activity android:name=".HumiActivity" />
         <activity android:name=".Smoke2Activity" />
         <activity android:name=".Ch4Activity" />
-        <activity android:name=".BlueToothActivity"></activity>
+        <activity android:name=".BlueToothActivity" />
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".R2Activity"></activity>
     </application>
 
 </manifest>
